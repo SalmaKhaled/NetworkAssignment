@@ -31,3 +31,38 @@ def CRC(frame,genterator):
 	#print(result)
     #print(message)
     return message
+def verifier(message, genterator):
+    order = len(genterator)
+    result = ""
+    index = order
+    for i in range(order):
+        if i == 0:
+            continue
+        message = message + "0"
+        result = result + str(int(message[i]) ^ int(genterator[i]))
+    # print(result)
+    for k in range(len(message))[index:]:
+        result = result + message[index]
+        resultprev = result
+        # print(index , "-" , result)
+        result = ''
+        for j in range(order):
+            if j == 0:
+                continue
+            if k == len(message):
+                continue
+            if resultprev[0] == '0':
+                result = result + str(int(resultprev[j]) ^ 0)
+            else:
+                result = result + str(int(resultprev[j]) ^ int(genterator[j]))
+        if len(result) < order:
+            for j in range(order - len(result) - 1):
+                result = "0" + result
+        index = index + 1
+    # message = str(int(message)^int(result))
+    # print(message)
+    #print(result)
+    if int(result) == 0:
+        print("correct")
+    else:
+        print("error")
